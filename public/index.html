@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>keyQuiz · Bases de datos clave-valor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="fx"></canvas>
+<div class="bg"><span class="orb o1"></span><span class="orb o2"></span><span class="orb o3"></span></div>
+<main>
+
+  <!-- INICIO -->
+  <section id="home" class="screen on">
+    <div class="floaty" aria-hidden="true">
+      <span style="left:9%;top:10%;animation-delay:0s">usuario:25</span><span style="left:84%;top:8%;animation-delay:1s">TTL</span>
+      <span style="left:89%;top:26%;animation-delay:2s">Hash</span><span style="left:4%;top:34%;animation-delay:1.5s">SET</span>
+      <span style="left:13%;top:78%;animation-delay:.5s">Sorted Set</span><span style="left:75%;top:85%;animation-delay:2.5s">GET "Ana"</span>
+    </div>
+    <div class="hero">
+      <div class="badge">★ INSERT COIN · APRENDE JUGANDO ★</div>
+      <h1 class="brand">key<span>Quiz</span></h1>
+      <p class="code">// aprende clave-valor jugando</p>
+      <p class="tag">Solo o con toda tu clase. Funciona en celular y computador.</p>
+    </div>
+    <div class="modes">
+      <button class="mode" id="btnSolo"><i>🎮</i><b>Jugar solo</b><small>Practica a tu ritmo</small></button>
+      <button class="mode" id="btnJoin"><i>👥</i><b>Unirme a una sala</b><small>Con el código de tu clase</small></button>
+      <button class="mode" id="btnHost"><i>📡</i><b>Crear sala</b><small>Soy el anfitrión</small></button>
+    </div>
+    <span class="pill">clave → valor</span>
+    <p class="foot">Press start to learn</p>
+  </section>
+
+  <!-- UNIRSE -->
+  <section id="joinS" class="screen card">
+    <h2>Unirme a una sala</h2>
+    <input id="name" maxlength="16" placeholder="Tu nombre" autocomplete="off">
+    <input id="code" maxlength="5" placeholder="Código de sala" autocomplete="off" style="text-transform:uppercase;letter-spacing:4px">
+    <p id="err" class="err" role="alert"></p>
+    <div class="row"><button class="main" id="go">Entrar</button><button class="ghost" id="btnBack">Volver</button></div>
+  </section>
+
+  <section id="wait" class="screen card">
+    <div class="logo">🎟️</div>
+    <h2>¡Estás dentro, <span id="who"></span>!</h2>
+    <p class="sub">Mira la pantalla del anfitrión. La partida empieza cuando él pulse el botón<span class="dots"></span></p>
+  </section>
+
+  <!-- JUEGO -->
+  <section id="play" class="screen">
+    <aside id="tower"></aside>
+    <div id="stage">
+      <div class="hud">
+        <span id="hearts"></span>
+        <span id="floorTxt"></span>
+        <span id="posTxt"></span>
+        <span id="scoreTxt"></span>
+      </div>
+      <div class="guard"><span id="guardEmoji">👹</span><span id="cat"></span></div>
+      <div class="timer"><div id="bar"></div></div>
+      <h2 id="question"></h2>
+      <div id="answer"></div>
+      <div id="options"></div>
+      <div class="row">
+        <button class="main hidden" id="check">Comprobar</button>
+      </div>
+      <p id="fb" role="status"></p>
+      <button class="main hidden" id="next">Subir</button>
+    </div>
+  </section>
+
+  <section id="end" class="screen card">
+    <div class="logo" id="endIcon"></div>
+    <h2 id="endTitle"></h2>
+    <p class="sub" id="endSub"></p>
+    <div id="stats"></div>
+    <div id="finalBox" class="hidden">
+      <h3>🏆 Ranking de la sala</h3>
+      <div id="finalRank"><p class="sub">Esperando a que terminen los demás<span class="dots"></span></p></div>
+    </div>
+    <button class="main" id="again">Volver al inicio</button>
+  </section>
+
+  <!-- ANFITRIÓN -->
+  <section id="hlobby" class="screen hostwrap">
+    <h1 class="brand sm">key<span>Quiz</span></h1>
+    <div class="join">
+      <div>Entra desde tu celular o computador a:</div>
+      <div class="link" id="link">Creando sala…</div>
+      <div>o escribe el código:</div>
+      <div class="big" id="codeTxt">·····</div>
+      <div id="note" class="sub" style="margin:auto"></div>
+    </div>
+    <h2><span id="count">0</span> jugadores en la sala</h2>
+    <div id="chips"></div>
+    <div class="row" style="justify-content:center">
+      <button class="main" id="start" disabled>Empezar juego</button>
+      <button class="ghost main" id="hHome" style="background:var(--stone2);color:var(--ink)">⬅ Volver al inicio</button>
+    </div>
+  </section>
+
+  <section id="hlive" class="screen hostwrap">
+    <h2 id="liveTitle">¡Partida en curso! · Ranking en vivo</h2>
+    <div id="rows"></div>
+    <button class="main" id="endNow">Terminar partida</button>
+  </section>
+
+  <section id="hfinal" class="screen hostwrap">
+    <h2>🏆 Resultados finales</h2>
+    <div id="podium"></div>
+    <h3 id="allTitle">Clasificación completa</h3>
+    <div id="rows2"></div>
+    <button class="main" onclick="location.href=location.pathname">Volver al inicio</button>
+  </section>
+</main>
+<script src="questions.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

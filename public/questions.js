@@ -1,0 +1,35 @@
+// Preguntas de keyQuiz (bases de datos clave-valor / Redis).
+// type "c": selección múltiple (o = opciones, a = índice de la correcta: 0=A, 1=B, 2=C, 3=D).
+// type "t": ordenar pasos (parts = orden correcto; show = orden en que aparecen las fichas, ninguna en su lugar correcto).
+const QUESTIONS = [
+ { type:"c", g:"🧙", cat:"Función de la clave", q:"¿Qué función cumple la clave dentro de una base de datos clave-valor?",
+   o:["Guardar el contenido asociado a cada registro almacenado.","Servir como identificador único para ubicar el dato buscado.","Definir las tablas y columnas de un esquema relacional rígido.","Calcular la puntuación con la que se ordenan los valores."], a:1,
+   why:"La clave es el identificador único y el valor contiene la información. Como en una agenda: el nombre es la clave y el teléfono es el valor." },
+ { type:"c", g:"🦉", cat:"Limitación del modelo", q:"¿Cuál es una limitación de las bases de datos clave-valor?",
+   o:["Las consultas complejas, los filtros y las relaciones.","Guardar valores de texto, números o datos binarios.","Recuperar el dato cuando ya se conoce su clave exacta.","Incrementar o disminuir contadores de forma sencilla."], a:0,
+   why:"Son sencillas y rápidas para búsquedas por clave, pero no destacan en consultas complejas ni relaciones entre datos." },
+ { type:"c", g:"🐲", cat:"Mejor clave para el usuario 25", q:"Para identificar al usuario 25, ¿cuál sería la mejor forma de escribir la clave?",
+   o:["\"25\", porque es corta y cumple igual la función de clave.","\"usuario\", porque señala el tipo de dato al que pertenece.","\"usuario:25\", porque combina el tipo de dato y el número.","\"25:usuario\", porque conserva juntos los dos datos."], a:2,
+   why:"Una buena clave indica el tipo de información y su identificador, así se reconoce su propósito sin abrir su contenido." },
+ { type:"t", steps:1, g:"🤖", cat:"Patrones de acceso", q:"Ordena los pasos de diseño.",
+   parts:["Identificar los patrones de acceso (cómo se consultarán los datos)","Diseñar las claves según esas necesidades de acceso","Elegir la estructura de datos adecuada","Conseguir consultas más rápidas y mejor rendimiento"], show:[2,3,0,1], extra:[], sep:" → ",
+   why:"Primero se conocen las necesidades de acceso y, a partir de ellas, se decide cómo organizar las claves y qué estructura usar." },
+ { type:"c", g:"🧛", cat:"Sesiones con varios servidores", q:"¿Por qué Redis resulta útil para manejar sesiones en aplicaciones con varios servidores?",
+   o:["Porque la sesión se guarda dentro del navegador de cada usuario.","Porque cada servidor crea su propia copia aislada de la sesión.","Porque la sesión se borra al cerrar cada petición del usuario.","Porque la sesión queda disponible para cualquiera de ellos."], a:3,
+   why:"Redis guarda la sesión del usuario con un tiempo de expiración y todos los servidores pueden acceder a ella." },
+ { type:"c", g:"👻", cat:"Contadores", q:"¿Qué permite hacer Redis con los contadores?",
+   o:["Almacenarlos en una lista que conserva el orden de las visitas.","Guardarlos como etiquetas únicas dentro de un conjunto.","Incrementarlos y disminuirlos de manera sencilla.","Ordenarlos por puntuación para mostrar un ranking."], a:2,
+   why:"Los contadores son claves con números que aumentan o disminuyen, como visitas, productos vendidos o acciones realizadas." },
+ { type:"c", g:"🐙", cat:"Estructura para usuario:25", q:"¿Qué estructura conviene para guardar la clave usuario:25 con los campos nombre, correo y edad?",
+   o:["Hash, porque guarda varios pares campo-valor en una clave.","List, porque conserva los campos en una secuencia ordenada.","Set, porque impide que los campos del usuario se repitan.","String, porque reúne todos los campos en un solo texto."], a:0,
+   why:"Un Hash guarda varios pares campo-valor dentro de una misma clave, sin manejar cada campo como una clave aparte." },
+ { type:"t", steps:1, g:"🦂", cat:"Casos de uso: caché", q:"Ordena cómo funciona la caché.",
+   parts:["Una página consulta un dato en la base de datos principal","Guarda una copia temporal en Redis (caché)","Otro usuario solicita el mismo dato","La aplicación lo obtiene desde la caché sin consultar la base principal"], show:[2,3,0,1], extra:[], sep:" → ",
+   why:"Así se reducen las consultas a la base principal y se mejoran los tiempos de respuesta. Los datos suelen tener un tiempo de expiración." },
+ { type:"c", g:"🧟", cat:"Elementos sin repetidos", q:"¿Qué estructura usarías para guardar etiquetas únicas, sin elementos repetidos?",
+   o:["List, porque conserva el orden en que se agregan las etiquetas.","Hash, porque agrupa las etiquetas dentro de una sola clave.","Sorted Set, porque ordena cada etiqueta según su puntuación.","Set, porque almacena elementos únicos y sin repetidos."], a:3,
+   why:"Los Sets almacenan elementos únicos y permiten unión, intersección y diferencia." },
+ { type:"c", g:"🐉", cat:"Ranking con puntuación", q:"¿Qué estructura usarías para un ranking donde cada jugador tiene una puntuación?",
+   o:["Set, porque guarda a los jugadores sin elementos repetidos.","Sorted Set, porque ordena los elementos por su puntuación.","List, porque mantiene a los jugadores en una secuencia fija.","Hash, porque asocia a cada jugador su campo de puntaje."], a:1,
+   why:"Un Sorted Set es como un Set, pero cada elemento tiene una puntuación que lo mantiene ordenado: ideal para rankings." }
+];
